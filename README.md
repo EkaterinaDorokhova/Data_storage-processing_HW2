@@ -89,7 +89,7 @@ with (format csv, header true, delimiter ',');
 ### 1) Вывести все уникальные бренды, у которых стандартная стоимость выше 1500 долларов.
 
 ```dbml
-select brand, standard_cost 
+select * 
 from transaction 
 where standard_cost > 1500;
 ```
@@ -98,23 +98,32 @@ where standard_cost > 1500;
 ### 2) Вывести все подтвержденные транзакции за период '2017-04-01' по '2017-04-09' включительно.
 
 ```dbml
-
+select * 
+from transaction 
+where order_status = 'Approved' 
+and transaction_date between '2017-04-01' and '2017-04-09';
 ```
 ![select_2](select_2.png)
 
 ### 3) Вывести все профессии у клиентов из сферы IT или Financial Services, которые начинаются с фразы 'Senior'.
 
 ```dbml
-
+select * 
+from customer 
+where job_industry_category in ('IT', 'Financial Services') 
+and job_title like 'Senior%';
 ```
-![select_3](select_3.png)
+![select_3](Select_3.png)
 
 ### 4) Вывести все бренды, которые закупают клиенты, работающие в сфере Financial Services
 
 ```dbml
-
+select t.*, c.* 
+from transaction t 
+inner join customer c on t.customer_id = c.customer_id 
+where c.job_industry_category = 'Financial Services';
 ```
-![select_4](select_4.png)
+![select_4](Select_4.png)
 
 ### 5) Вывести 10 клиентов, которые оформили онлайн-заказ продукции из брендов 'Giant Bicycles', 'Norco Bicycles', 'Trek Bicycles'.
 
