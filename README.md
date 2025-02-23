@@ -150,7 +150,17 @@ where t.transaction_id is null;
 ### 7) Вывести всех клиентов из IT, у которых транзакции с максимальной стандартной стоимостью.
 
 ```dbml
-
+with ranked_transactions as (
+    select customer_id, 
+           standard_cost, 
+           row_number() over (partition by customer_id order by standard_cost desc) as rank_num
+    from transaction
+)
+select c.*, t.* 
+from customer c
+inner join ranked_transactions t on c.customer_id = t.customer_id
+where c.job_industry_category = 'IT' 
+and t.rank_num = 1;
 ```
 ![select_7](select_7.png)
 
