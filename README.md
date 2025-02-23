@@ -128,14 +128,22 @@ where c.job_industry_category = 'Financial Services';
 ### 5) Вывести 10 клиентов, которые оформили онлайн-заказ продукции из брендов 'Giant Bicycles', 'Norco Bicycles', 'Trek Bicycles'.
 
 ```dbml
-
+select c.*, t.* 
+from transaction t 
+inner join customer c on t.customer_id = c.customer_id 
+where t.online_order = true 
+and t.brand in ('Giant Bicycles', 'Norco Bicycles', 'Trek Bicycles')
+limit 10;
 ```
 ![select_5](select_5.png)
 
 ### 6) Вывести всех клиентов, у которых нет транзакций.
 
 ```dbml
-
+select * 
+from customer c 
+left join transaction t on c.customer_id = t.customer_id 
+where t.transaction_id is null;
 ```
 ![select_6](select_6.png)
 
