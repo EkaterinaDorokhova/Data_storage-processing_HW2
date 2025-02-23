@@ -157,6 +157,11 @@ where t.transaction_id is null;
 ### 8) Вывести всех клиентов из сферы IT и Health, у которых есть подтвержденные транзакции за период '2017-07-07' по '2017-07-17'.
 
 ```dbml
-
+select c.*, t.* 
+from customer c 
+inner join transaction t on c.customer_id = t.customer_id 
+where c.job_industry_category in ('IT', 'Health') 
+and t.order_status = 'Approved' 
+and t.transaction_date between '2017-07-07' and '2017-07-17';
 ```
 ![select_8](select_8.png)
